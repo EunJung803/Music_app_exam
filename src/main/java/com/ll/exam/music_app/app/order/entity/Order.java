@@ -40,7 +40,7 @@ public class Order extends BaseEntity {
         int payPrice = 0;
 
         for (OrderItem orderItem : orderItems) {
-            payPrice += orderItem.getPayPrice();
+            payPrice += orderItem.getSalePrice();
         }
 
         return payPrice;
@@ -61,9 +61,19 @@ public class Order extends BaseEntity {
     public int getPayPrice() {
         int payPrice = 0;
         for (OrderItem orderItem : orderItems) {
-            payPrice += orderItem.getSalePrice();
+            payPrice += orderItem.getPayPrice();
         }
 
         return payPrice;
+    }
+
+    public String getName() {
+        String name = orderItems.get(0).getProduct().getSubject();
+
+        if ( orderItems.size() > 1 ) {
+            name += " 외 %d곡".formatted(orderItems.size() - 1);
+        }
+
+        return name;
     }
 }
